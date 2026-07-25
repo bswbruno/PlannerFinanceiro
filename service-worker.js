@@ -1,4 +1,4 @@
-const CACHE_NAME = "planner-financeiro-v3";
+const CACHE_NAME = "planner-financeiro-v4";
 
 // Caminhos relativos à raiz do projeto (onde este arquivo vive)
 const arquivos = [
@@ -24,7 +24,16 @@ self.addEventListener("install", (event) => {
       );
     })
   );
-  self.skipWaiting();
+  // NÃO chama skipWaiting() aqui de propósito: assim, se já existir uma versão
+  // ativa controlando a página, esta nova versão fica em "waiting" até a
+  // pessoa clicar em "Atualizar agora" no banner (ver mensagem SKIP_WAITING
+  // abaixo). Isso evita trocar o app debaixo do usuário sem avisar.
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener("activate", (event) => {

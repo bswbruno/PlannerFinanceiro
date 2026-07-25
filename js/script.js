@@ -20,6 +20,8 @@ let idEditando = null;
 
 let periodoAtivo = "dia";
 
+let modoTodasMetas = false;
+
 let ultimoCalculoPeriodo = {
 
     dia:0,
@@ -464,7 +466,24 @@ selecionarMeta.addEventListener(
 
         metaSelecionada=null;
 
-        limparMetaSelecionada();
+        if(metas.length===0){
+
+            modoTodasMetas=false;
+
+            secaoTabelaMetas.classList.add(
+                "oculto"
+            );
+
+            limparMetaSelecionada();
+
+        }
+        else{
+
+            modoTodasMetas=true;
+
+            mostrarTodasAsMetas();
+
+        }
 
         mostrarHistorico();
 
@@ -473,6 +492,12 @@ selecionarMeta.addEventListener(
         return;
 
     }
+
+    modoTodasMetas=false;
+
+    secaoTabelaMetas.classList.add(
+        "oculto"
+    );
 
     metaSelecionada =
     metas.find(
@@ -498,6 +523,12 @@ function mostrarMetaSelecionada(){
         return;
 
     }
+
+    modoTodasMetas=false;
+
+    secaoTabelaMetas.classList.add(
+        "oculto"
+    );
 
     const progresso =
     calcularProgresso(
@@ -763,6 +794,228 @@ function limparMetaSelecionada(){
 }
 
 // ===============================
+// TODAS AS METAS (VISÃO AGREGADA)
+// ===============================
+
+function mostrarTodasAsMetas(){
+
+    secaoTabelaMetas.classList.remove(
+        "oculto"
+    );
+
+    const abertas =
+    metas.filter(
+        m=>calcularProgresso(m)<100
+    );
+
+    nomeMetaSelecionada.textContent =
+    "📊 Todas as metas";
+
+    const totalMeta =
+    metas.reduce(
+        (s,m)=>s+m.valorMeta,
+        0
+    );
+
+    const totalGuardado =
+    metas.reduce(
+        (s,m)=>s+m.valorAtual,
+        0
+    );
+
+    const totalFalta =
+    Math.max(
+        0,
+        totalMeta-totalGuardado
+    );
+
+    const progresso =
+    totalMeta>0
+    ?
+    (totalGuardado/totalMeta)*100
+    :
+    0;
+
+    valorMetaSelecionada.textContent =
+    moeda(totalMeta);
+
+    valorAtualSelecionada.textContent =
+    moeda(totalGuardado);
+
+    faltaSelecionada.textContent =
+    moeda(totalFalta);
+
+    percentualSelecionado.textContent =
+    progresso.toFixed(1)
+    +
+    "%";
+
+    progressoSelecionada.style.width =
+    Math.min(progresso,100)
+    +
+    "%";
+
+    dataAtual.textContent =
+    formatarDataAtual();
+
+    // meta aberta mais proxima do vencimento, entre todas
+    let proxima = null;
+
+    abertas.forEach(m=>{
+
+        if(
+        !proxima ||
+        calcularDias(m.dataFinal) <
+        calcularDias(proxima.dataFinal)
+        ){
+
+            proxima = m;
+
+        }
+
+    });
+
+    if(proxima){
+
+        dataVencimento.textContent =
+        formatarData(proxima.dataFinal);
+
+        diasSelecionada.textContent =
+        calcularDias(proxima.dataFinal)
+        +
+        " dias";
+
+    }
+    else{
+
+        dataVencimento.textContent =
+        "--";
+
+        diasSelecionada.textContent =
+        "0";
+
+    }
+
+    // soma do valor/dia de cada meta aberta (cada uma com seu proprio prazo)
+    let somaDia = 0;
+
+    abertas.forEach(m=>{
+
+        const falta =
+        Math.max(
+            0,
+            m.valorMeta-m.valorAtual
+        );
+
+        const dias =
+        calcularDias(m.dataFinal);
+
+        somaDia +=
+        calcularValorDia(falta,dias);
+
+    });
+
+    ultimoCalculoPeriodo = {
+
+        dia:somaDia,
+
+        semana:somaDia*7,
+
+        mes:somaDia*30
+
+    };
+
+    renderizarValorPeriodo();
+
+    analiseMeta.classList.remove(
+        "analise-ok",
+        "analise-atencao",
+        "analise-risco"
+    );
+
+    if(metas.length===0){
+
+        analiseMeta.textContent = "";
+
+    }
+    else if(abertas.length===0){
+
+        analiseMeta.textContent =
+        "🎉 Todas as suas metas estão concluídas!";
+
+        analiseMeta.classList.add(
+            "analise-ok"
+        );
+
+    }
+    else{
+
+        analiseMeta.textContent =
+        `Você tem ${abertas.length} meta${abertas.length>1?"s":""} em aberto. Guarde ${moeda(somaDia)} por dia, no total, pra manter todas em dia — veja o detalhamento de cada uma abaixo.`;
+
+        analiseMeta.classList.add(
+            "analise-ok"
+        );
+
+    }
+
+    listaHistorico.innerHTML =
+    "<p>Selecione uma meta específica para ver o histórico de aportes.</p>";
+
+    renderizarTabelaTodasMetas(abertas);
+
+}
+
+function renderizarTabelaTodasMetas(abertas){
+
+    corpoTabelaMetas.innerHTML = "";
+
+    if(!abertas.length){
+
+        corpoTabelaMetas.innerHTML =
+        `<tr><td colspan="6" style="text-align:center;color:var(--secondary);padding:24px;">Nenhuma meta em aberto no momento</td></tr>`;
+
+        return;
+
+    }
+
+    abertas
+    .slice()
+    .sort(
+        (a,b)=>
+        calcularDias(a.dataFinal) -
+        calcularDias(b.dataFinal)
+    )
+    .forEach(m=>{
+
+        const falta =
+        Math.max(
+            0,
+            m.valorMeta-m.valorAtual
+        );
+
+        const dias =
+        calcularDias(m.dataFinal);
+
+        const dia =
+        calcularValorDia(falta,dias);
+
+        corpoTabelaMetas.innerHTML += `
+        <tr>
+            <td>${m.nome}</td>
+            <td>${formatarData(m.dataFinal)}</td>
+            <td>${dias} dias</td>
+            <td>${moeda(dia)}</td>
+            <td>${moeda(dia*7)}</td>
+            <td>${moeda(dia*30)}</td>
+        </tr>
+        `;
+
+    });
+
+}
+
+// ===============================
 // CÁLCULOS
 // ===============================
 
@@ -887,6 +1140,16 @@ document.getElementById(
 const listaHistorico =
 document.getElementById(
 "listaHistorico"
+);
+
+const secaoTabelaMetas =
+document.getElementById(
+"secaoTabelaMetas"
+);
+
+const corpoTabelaMetas =
+document.getElementById(
+"corpoTabelaMetas"
 );
 
 const btnTipoAporte =
@@ -1434,6 +1697,12 @@ function excluirMeta(id){
 
     atualizarGraficos();
 
+    if(modoTodasMetas){
+
+        mostrarTodasAsMetas();
+
+    }
+
 }
 
 // ===============================
@@ -1724,6 +1993,11 @@ function verificarMudancaDeDia(){
         mostrarHistorico();
 
     }
+    else if(modoTodasMetas){
+
+        mostrarTodasAsMetas();
+
+    }
 
 }
 
@@ -1751,30 +2025,231 @@ document.addEventListener(
 
 
 
+// ===============================
+// PWA — SERVICE WORKER + ATUALIZAÇÃO
+// ===============================
+
+const bannerAtualizacao =
+document.getElementById(
+"bannerAtualizacao"
+);
+
+const btnAtualizarAgora =
+document.getElementById(
+"btnAtualizarAgora"
+);
+
+const btnAtualizarDepois =
+document.getElementById(
+"btnAtualizarDepois"
+);
+
+function mostrarBannerAtualizacao(workerEmEspera){
+
+    bannerAtualizacao.classList.remove(
+        "oculto"
+    );
+
+    btnAtualizarAgora.onclick = ()=>{
+
+        workerEmEspera.postMessage(
+            "SKIP_WAITING"
+        );
+
+        btnAtualizarAgora.disabled = true;
+
+        btnAtualizarAgora.textContent =
+        "Atualizando...";
+
+    };
+
+    btnAtualizarDepois.onclick = ()=>{
+
+        bannerAtualizacao.classList.add(
+            "oculto"
+        );
+
+    };
+
+}
+
 if(
 "serviceWorker" in navigator
 ){
 
+    window.addEventListener(
+    "load",
+    ()=>{
 
-window.addEventListener(
-"load",
-()=>{
+        navigator.serviceWorker.register(
+        "service-worker.js"
+        )
+        .then((registro)=>{
 
+            console.log(
+            "Aplicativo funcionando offline"
+            );
 
-navigator.serviceWorker.register(
-"service-worker.js"
-)
+            // ja existe uma atualização baixada e esperando (ex: outra aba)
+            if(registro.waiting){
 
-.then(()=>{
+                mostrarBannerAtualizacao(
+                    registro.waiting
+                );
 
-console.log(
-"Aplicativo funcionando offline"
+            }
+
+            // uma nova versão do service-worker.js foi encontrada
+            registro.addEventListener(
+            "updatefound",
+            ()=>{
+
+                const novoWorker =
+                registro.installing;
+
+                if(!novoWorker){
+
+                    return;
+
+                }
+
+                novoWorker.addEventListener(
+                "statechange",
+                ()=>{
+
+                    // "installed" + já existe um controller ativo = é uma
+                    // atualização de verdade (não a primeira instalação)
+                    if(
+                    novoWorker.state==="installed" &&
+                    navigator.serviceWorker.controller
+                    ){
+
+                        mostrarBannerAtualizacao(
+                            novoWorker
+                        );
+
+                    }
+
+                }
+                );
+
+            }
+            );
+
+        })
+        .catch((erro)=>{
+
+            console.warn(
+            "Falha ao registrar service worker",
+            erro
+            );
+
+        });
+
+        // quando o novo worker assume, recarrega a página uma única vez
+        // pra garantir que o HTML/JS/CSS mais novos sejam usados
+        let jaRecarregou = false;
+
+        navigator.serviceWorker.addEventListener(
+        "controllerchange",
+        ()=>{
+
+            if(jaRecarregou){
+
+                return;
+
+            }
+
+            jaRecarregou = true;
+
+            window.location.reload();
+
+        }
+        );
+
+    }
+    );
+
+}
+
+// ===============================
+// PWA — INSTALAR NO DESKTOP/ANDROID
+// ===============================
+// No iOS/Safari não existe esse evento (Apple não suporta instalação
+// programática) — lá a pessoa instala manualmente por "Adicionar à Tela
+// de Início", então o botão simplesmente não aparece.
+
+const btnInstalarApp =
+document.getElementById(
+"btnInstalarApp"
 );
 
-})
+let promptInstalacao = null;
 
+window.addEventListener(
+"beforeinstallprompt",
+(evento)=>{
 
-});
+    evento.preventDefault();
 
+    promptInstalacao = evento;
+
+    btnInstalarApp.classList.remove(
+        "oculto"
+    );
+
+}
+);
+
+btnInstalarApp.addEventListener(
+"click",
+async ()=>{
+
+    if(!promptInstalacao){
+
+        return;
+
+    }
+
+    btnInstalarApp.disabled = true;
+
+    promptInstalacao.prompt();
+
+    await promptInstalacao.userChoice;
+
+    promptInstalacao = null;
+
+    btnInstalarApp.classList.add(
+        "oculto"
+    );
+
+    btnInstalarApp.disabled = false;
+
+}
+);
+
+// esconde o botão se o app já foi instalado (ou aberto já instalado)
+window.addEventListener(
+"appinstalled",
+()=>{
+
+    btnInstalarApp.classList.add(
+        "oculto"
+    );
+
+    promptInstalacao = null;
+
+}
+);
+
+if(
+window.matchMedia(
+"(display-mode: standalone)"
+).matches
+){
+
+    btnInstalarApp.classList.add(
+        "oculto"
+    );
 
 }

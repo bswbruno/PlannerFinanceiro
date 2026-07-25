@@ -601,6 +601,78 @@ body.dark .historico-valor.retirada{
 
 }
 
+/* TABELA "TODAS AS METAS" */
+
+.secao-tabela-metas{
+
+    margin-top:30px;
+
+}
+
+.tabela-metas-legenda{
+
+    color:var(--secondary);
+    font-size:14px;
+    margin-bottom:20px;
+
+}
+
+.table-wrap{
+
+    overflow-x:auto;
+
+}
+
+.tabela-metas{
+
+    width:100%;
+    border-collapse:collapse;
+    min-width:560px;
+
+}
+
+.tabela-metas th{
+
+    text-align:left;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    color:var(--secondary);
+    font-weight:600;
+    padding:10px 14px;
+    border-bottom:1px solid var(--border);
+    white-space:nowrap;
+
+}
+
+.tabela-metas td{
+
+    padding:14px;
+    font-size:14px;
+    border-bottom:1px solid var(--border);
+    white-space:nowrap;
+
+}
+
+.tabela-metas tbody tr:last-child td{
+
+    border-bottom:none;
+
+}
+
+.tabela-metas tbody tr:hover{
+
+    background:var(--bg);
+
+}
+
+.tabela-metas td:first-child{
+
+    font-weight:600;
+    white-space:normal;
+
+}
+
 .modal-header{
 
     display:flex;
@@ -637,6 +709,69 @@ body.dark .historico-valor.retirada{
 .modal-header button:hover{
 
     background:var(--bg);
+
+}
+
+/* BANNER DE ATUALIZAÇÃO */
+
+.banner-atualizacao{
+
+    position:fixed;
+    left:20px;
+    right:20px;
+    bottom:20px;
+    z-index:200;
+    max-width:520px;
+    margin:0 auto;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+    padding:20px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+    animation:subirBanner .3s ease;
+
+}
+
+@keyframes subirBanner{
+
+    from{ transform:translateY(20px); opacity:0; }
+
+    to{ transform:translateY(0); opacity:1; }
+
+}
+
+.banner-atualizacao span{
+
+    flex:1;
+    min-width:200px;
+    font-size:14px;
+    font-weight:500;
+
+}
+
+.banner-atualizacao-acoes{
+
+    display:flex;
+    gap:10px;
+
+}
+
+.banner-atualizacao-acoes button{
+
+    padding:10px 16px;
+    font-size:13px;
+
+}
+
+#btnAtualizarDepois{
+
+    background:transparent;
+    color:var(--secondary);
+    border:1px solid var(--border);
 
 }
 

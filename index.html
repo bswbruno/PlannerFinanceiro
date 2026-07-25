@@ -43,6 +43,8 @@
       <option value="">Todas as metas</option>
     </select>
 
+    <button id="btnInstalarApp" type="button" class="oculto">📲 Instalar app</button>
+
     <button id="btnTema" type="button" aria-label="Alternar tema">🌙</button>
 
     <button id="btnNovaMeta" type="button">+ Nova Meta</button>
@@ -121,6 +123,28 @@
       <button id="btnAdicionarValor" type="button">Movimentar valor</button>
     </div>
 
+  </section>
+
+  <section id="secaoTabelaMetas" class="secao-tabela-metas oculto">
+    <div class="card-destaque">
+      <h2>📋 Detalhamento por meta</h2>
+      <p class="tabela-metas-legenda">Cada meta tem seu próprio vencimento — veja abaixo quanto guardar em cada uma.</p>
+      <div class="table-wrap">
+        <table class="tabela-metas">
+          <thead>
+            <tr>
+              <th>Meta</th>
+              <th>Vencimento</th>
+              <th>Dias</th>
+              <th>Por dia</th>
+              <th>Por semana</th>
+              <th>Por mês</th>
+            </tr>
+          </thead>
+          <tbody id="corpoTabelaMetas"></tbody>
+        </table>
+      </div>
+    </div>
   </section>
 
    <section class="dashboard">
@@ -218,6 +242,15 @@
     </div>
 
     <button id="btnSalvarValor" type="button">Confirmar aporte</button>
+  </div>
+</div>
+
+<!-- BANNER DE ATUALIZAÇÃO DISPONÍVEL -->
+<div id="bannerAtualizacao" class="banner-atualizacao oculto">
+  <span>🔄 Uma nova versão do app está disponível.</span>
+  <div class="banner-atualizacao-acoes">
+    <button id="btnAtualizarDepois" type="button">Depois</button>
+    <button id="btnAtualizarAgora" type="button">Atualizar agora</button>
   </div>
 </div>
 
