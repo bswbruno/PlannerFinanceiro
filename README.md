@@ -13,7 +13,7 @@
 
 ### 🔗 [Acessar o app ao vivo](https://bswbruno.github.io/PlannerFinanceiro/)
 
-[Funcionalidades](#-funcionalidades) · [Tecnologias](#-tecnologias) · [Como rodar](#-como-rodar-localmente) · [Deploy](#-deploy-no-github-pages)
+[Funcionalidades](#-funcionalidades) · [Tecnologias](#-tecnologias) · [Deploy](#-deploy-no-github-pages)
 
 </div>
 
@@ -46,9 +46,9 @@
 
 O **Planner Financeiro** nasceu de um problema bem prático: como saber, todos os dias, **quanto eu preciso guardar** para bater cada uma das minhas metas financeiras antes do prazo?
 
-O app centraliza várias metas (viagem, reserva de emergência, um curso, uma compra) e calcula automaticamente, para cada uma, o valor diário necessário até o vencimento — além de dar uma visão consolidada em dashboard, gráficos de distribuição/evolução e histórico de aportes e retiradas.
+O app centraliza várias metas (viagem, reserva de emergência, um curso, uma compra) e calcula automaticamente, para cada uma, o valor diário necessário até o vencimento além de dar uma visão consolidada em dashboard, gráficos de distribuição/evolução e histórico de aportes e retiradas.
 
-Foi construído **sem frameworks**, com HTML, CSS e JavaScript puro, como exercício de fundamentar bem os conceitos de DOM, estado em memória, persistência local e Service Workers — e para entregar uma experiência de app nativo (instalável, responsivo, offline-first) usando só tecnologias web nativas.
+Foi construído **sem frameworks**, com HTML, CSS e JavaScript puro, como exercício de fundamentar bem os conceitos de DOM, estado em memória, persistência local e Service Workers e para entregar uma experiência de app nativo (instalável, responsivo, offline-first) usando só tecnologias web nativas.
 
 ## ✨ Funcionalidades
 
@@ -115,36 +115,7 @@ Depois é só abrir `http://localhost:8080` no navegador.
 
 1. Acesse o site publicado pelo navegador do celular (Chrome/Safari)
 2. Toque em **Adicionar à tela inicial** / **Instalar app**
-3. Pronto — o Planner Financeiro passa a abrir como um app nativo, com ícone próprio e funcionando offline
-
-## 🚀 Deploy no GitHub Pages
-
-O projeto é 100% estático, então o GitHub Pages é a forma mais simples (e gratuita) de publicá-lo:
-
-1. Suba o conteúdo desta pasta para um repositório no GitHub
-2. No repositório, vá em **Settings → Pages**
-3. Em **Build and deployment**, selecione **Deploy from a branch**
-4. Escolha a branch `main` e a pasta `/ (root)` → **Save**
-5. Em alguns minutos o GitHub ativa o endereço:
-   `https://bswbruno.github.io/PlannerFinanceiro/`
-6. Atualize esse link no topo deste README e no badge **GitHub Pages**
-
-> ✅ Como todos os caminhos do projeto (`css/`, `js/`, `assets/`, `manifest.json`) são relativos, ele funciona normalmente publicado dentro de um subcaminho como `usuario.github.io/repositorio/` — não precisa ajustar nada no código.
-
-### Colocando no seu site de portfólio
-
-O jeito mais confiável é **linkar** para a URL do GitHub Pages (um botão "Ver projeto" / "Live demo" apontando pra ela), em vez de colocar o app dentro de um `<iframe>`. PWAs com Service Worker às vezes se comportam de forma inconsistente dentro de iframe (o registro do Service Worker pode ser bloqueado pelo navegador dependendo do contexto). Para o portfólio, o combo que funciona bem é:
-
-- Print/GIF do app na seção do projeto (use os arquivos de `docs/screenshots/`)
-- Botão/link "🔗 Ver ao vivo" apontando para o GitHub Pages
-- Botão/link "💻 Código-fonte" apontando para o repositório
-
-## 🧠 Desafios e aprendizados
-
-- Modelar o cálculo de **"valor necessário por dia"** considerando prazo, valor já guardado e situação da meta (em dia, urgente, atrasada, concluída)
-- Estruturar um Service Worker resiliente, que não quebra o cache inteiro se um único arquivo falhar ao ser baixado
-- Trabalhar toda a persistência e o estado da aplicação em JavaScript puro, sem um framework reativo, mantendo a UI sincronizada manualmente após cada ação
-- Ajustar a ordem visual dos componentes por breakpoint (com `order` no Flexbox/Grid) para priorizar as informações mais relevantes em telas pequenas
+3. Pronto o Planner Financeiro passa a abrir como um app nativo, com ícone próprio e funcionando offline
 
 ## 🗺 Próximos passos
 
@@ -157,8 +128,8 @@ O jeito mais confiável é **linkar** para a URL do GitHub Pages (um botão "Ver
 
 Feito por **[Seu Nome]**
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/seu-usuario)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/wanderley-bruno/)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bswbruno)
 
 ---
 
