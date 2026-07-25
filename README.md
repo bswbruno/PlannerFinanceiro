@@ -9,9 +9,9 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](#)
 [![PWA](https://img.shields.io/badge/PWA-Installable-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)](#)
 [![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chart.js&logoColor=white)](#)
-[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Online-222222?style=for-the-badge&logo=github&logoColor=white)](https://SEU_USUARIO.github.io/NOME_DO_REPOSITORIO/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Online-222222?style=for-the-badge&logo=github&logoColor=white)](https://bswbruno.github.io/PlannerFinanceiro/)
 
-### 🔗 [Acessar o app ao vivo](https://SEU_USUARIO.github.io/NOME_DO_REPOSITORIO/)
+
 
 [Funcionalidades](#-funcionalidades) · [Tecnologias](#-tecnologias) · [Como rodar](#-como-rodar-localmente) · [Deploy](#-deploy-no-github-pages)
 
@@ -44,7 +44,7 @@
 
 O **Planner Financeiro** nasceu de um problema bem prático: como saber, todos os dias, **quanto eu preciso guardar** para bater cada uma das minhas metas financeiras antes do prazo?
 
-O app centraliza várias metas (viagem, reserva de emergência, um curso, uma compra) e calcula automaticamente, para cada uma, o valor diário necessário até o vencimento — além de dar uma visão consolidada em dashboard, gráficos de distribuição/evolução e histórico de aportes e retiradas.
+O app centraliza várias metas (viagem, reserva de emergência, um curso, uma compra) e calcula automaticamente, para cada uma, o valor diário necessário até o vencimento além de dar uma visão consolidada em dashboard, gráficos de distribuição/evolução e histórico de aportes e retiradas.
 
 Foi construído **sem frameworks**, com HTML, CSS e JavaScript puro, como exercício de fundamentar bem os conceitos de DOM, estado em memória, persistência local e Service Workers — e para entregar uma experiência de app nativo (instalável, responsivo, offline-first) usando só tecnologias web nativas.
 
@@ -153,7 +153,7 @@ O jeito mais confiável é **linkar** para a URL do GitHub Pages (um botão "Ver
 
 ## 👤 Autor
 
-Feito por **[Seu Nome]**
+Feito por **[Bruno Santos]**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/seu-usuario)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario)
