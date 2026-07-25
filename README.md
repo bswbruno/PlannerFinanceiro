@@ -9,7 +9,7 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](#)
 [![PWA](https://img.shields.io/badge/PWA-Installable-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)](#)
 [![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chart.js&logoColor=white)](#)
-[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Online-222222?style=for-the-badge&logo=github&logoColor=white)]([https://SEU_USUARIO.github.io/NOME_DO_REPOSITORIO/](https://bswbruno.github.io/PlannerFinanceiro/))
+[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Online-222222?style=for-the-badge&logo=github&logoColor=white)](https://bswbruno.github.io/PlannerFinanceiro/)
 
 ### 🔗 [Acessar o app ao vivo](https://SEU_USUARIO.github.io/NOME_DO_REPOSITORIO/)
 
