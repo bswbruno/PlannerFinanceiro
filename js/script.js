@@ -8,6 +8,8 @@ const CHAVE_METAS = "planner_metas_v1";
 
 const CHAVE_TEMA = "planner_tema_v1";
 
+const CHAVE_PERIODO = "planner_periodo_v1";
+
 let metas = [];
 
 let metaSelecionada = null;
@@ -15,6 +17,18 @@ let metaSelecionada = null;
 let modoEdicao = false;
 
 let idEditando = null;
+
+let periodoAtivo = "dia";
+
+let ultimoCalculoPeriodo = {
+
+    dia:0,
+
+    semana:0,
+
+    mes:0
+
+};
 
 // ===============================
 // ELEMENTOS
@@ -102,9 +116,29 @@ document.getElementById(
 "progressoSelecionada"
 );
 
-const valorDia =
+const tituloPeriodo =
 document.getElementById(
-"valorDia"
+"tituloPeriodo"
+);
+
+const valorPeriodo =
+document.getElementById(
+"valorPeriodo"
+);
+
+const btnPeriodoDia =
+document.getElementById(
+"btnPeriodoDia"
+);
+
+const btnPeriodoSemana =
+document.getElementById(
+"btnPeriodoSemana"
+);
+
+const btnPeriodoMes =
+document.getElementById(
+"btnPeriodoMes"
 );
 
 const percentualSelecionado =
@@ -127,21 +161,6 @@ document.getElementById(
 "analiseMeta"
 );
 
-const quebraPeriodo =
-document.getElementById(
-"quebraPeriodo"
-);
-
-const valorSemana =
-document.getElementById(
-"valorSemana"
-);
-
-const valorMes =
-document.getElementById(
-"valorMes"
-);
-
 // ===============================
 // INICIALIZAÇÃO
 // ===============================
@@ -153,6 +172,8 @@ window.addEventListener(
     carregarMetas();
 
     carregarTema();
+
+    carregarPeriodo();
 
     preencherSelectMetas();
 
@@ -520,29 +541,17 @@ function mostrarMetaSelecionada(){
     diasSelecionada.textContent =
     dias + " dias";
 
-    valorDia.textContent =
-    moeda(dia)
-    +
-    " / dia";
+    ultimoCalculoPeriodo = {
 
-    if(dias>30){
+        dia:dia,
 
-        valorSemana.textContent =
-        moeda(dia*7);
+        semana:dia*7,
 
-        valorMes.textContent =
-        moeda(dia*30);
+        mes:dia*30
 
-        quebraPeriodo.style.display =
-        "flex";
+    };
 
-    }
-    else{
-
-        quebraPeriodo.style.display =
-        "none";
-
-    }
+    renderizarValorPeriodo();
 
     percentualSelecionado.textContent =
     progresso.toFixed(1)
@@ -569,6 +578,96 @@ function mostrarMetaSelecionada(){
     );
 
 }
+
+function renderizarValorPeriodo(){
+
+    const rotulos = {
+
+        dia:{ titulo:"💰 Guardar por dia", sufixo:" / dia" },
+
+        semana:{ titulo:"💰 Guardar por semana", sufixo:" / semana" },
+
+        mes:{ titulo:"💰 Guardar por mês", sufixo:" / mês" }
+
+    };
+
+    const info = rotulos[periodoAtivo];
+
+    tituloPeriodo.textContent =
+    info.titulo;
+
+    valorPeriodo.textContent =
+    moeda(
+        ultimoCalculoPeriodo[periodoAtivo]
+    )
+    +
+    info.sufixo;
+
+}
+
+function selecionarPeriodo(periodo){
+
+    periodoAtivo = periodo;
+
+    localStorage.setItem(
+        CHAVE_PERIODO,
+        periodo
+    );
+
+    btnPeriodoDia.classList.toggle(
+        "ativo",
+        periodo==="dia"
+    );
+
+    btnPeriodoSemana.classList.toggle(
+        "ativo",
+        periodo==="semana"
+    );
+
+    btnPeriodoMes.classList.toggle(
+        "ativo",
+        periodo==="mes"
+    );
+
+    renderizarValorPeriodo();
+
+}
+
+function carregarPeriodo(){
+
+    const salvo =
+    localStorage.getItem(
+        CHAVE_PERIODO
+    );
+
+    if(
+    salvo==="dia" ||
+    salvo==="semana" ||
+    salvo==="mes"
+    ){
+
+        periodoAtivo = salvo;
+
+    }
+
+    selecionarPeriodo(periodoAtivo);
+
+}
+
+btnPeriodoDia.addEventListener(
+"click",
+()=>selecionarPeriodo("dia")
+);
+
+btnPeriodoSemana.addEventListener(
+"click",
+()=>selecionarPeriodo("semana")
+);
+
+btnPeriodoMes.addEventListener(
+"click",
+()=>selecionarPeriodo("mes")
+);
 
 function aplicarAnalise(progresso, dias, valorDia){
 
@@ -628,11 +727,17 @@ function limparMetaSelecionada(){
     diasSelecionada.textContent =
     "0";
 
-    valorDia.textContent =
-    "R$ 0,00";
+    ultimoCalculoPeriodo = {
 
-    quebraPeriodo.style.display =
-    "none";
+        dia:0,
+
+        semana:0,
+
+        mes:0
+
+    };
+
+    renderizarValorPeriodo();
 
     percentualSelecionado.textContent =
     "0%";
@@ -706,14 +811,23 @@ function calcularDias(data){
     const hoje =
     new Date();
 
+    hoje.setHours(0,0,0,0);
+
+    const [ano, mes, dia] =
+    data
+    .split("-")
+    .map(Number);
+
     const final =
-    new Date(data);
+    new Date(ano, mes-1, dia);
+
+    final.setHours(0,0,0,0);
 
     const diferenca =
     final - hoje;
 
     const dias =
-    Math.ceil(
+    Math.round(
     diferenca /
     (1000*60*60*24)
     );
@@ -1572,8 +1686,69 @@ function formatarDataAtual(){
 }
 
 // ===============================
-// PWA
+// ATUALIZAÇÃO AUTOMÁTICA POR DIA
 // ===============================
+// Os valores (falta por dia/semana/mês, dias restantes) dependem da
+// data de hoje. Se o app ficar aberto e a data virar (00:00), ou se o
+// usuário voltar pra aba depois de um tempo, isso recalcula tudo sem
+// precisar dar F5.
+
+let ultimoDiaConhecido =
+new Date()
+.toDateString();
+
+function verificarMudancaDeDia(){
+
+    const diaAtual =
+    new Date()
+    .toDateString();
+
+    if(diaAtual===ultimoDiaConhecido){
+
+        return;
+
+    }
+
+    ultimoDiaConhecido = diaAtual;
+
+    renderizarListaMetas();
+
+    atualizarDashboard();
+
+    atualizarGraficos();
+
+    if(metaSelecionada){
+
+        mostrarMetaSelecionada();
+
+        mostrarHistorico();
+
+    }
+
+}
+
+// checa a cada minuto (troca de dia é detectada em até 1 min de atraso)
+setInterval(
+verificarMudancaDeDia,
+60000
+);
+
+// checa também assim que a aba volta a ficar visível
+// (ex: celular que ficou em segundo plano ou tela bloqueada durante a noite)
+document.addEventListener(
+"visibilitychange",
+()=>{
+
+    if(document.visibilityState==="visible"){
+
+        verificarMudancaDeDia();
+
+    }
+
+}
+);
+
+
 
 
 if(

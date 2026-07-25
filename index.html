@@ -109,18 +109,13 @@
     </div>
 
     <div class="card-dia">
-      <h2>💰 Guardar por dia</h2>
-      <strong id="valorDia">R$0,00</strong>
+      <h2 id="tituloPeriodo">💰 Guardar por dia</h2>
+      <strong id="valorPeriodo">R$0,00</strong>
 
-      <div id="quebraPeriodo" class="quebra-periodo" style="display:none;">
-        <div class="quebra-item">
-          <span>Por semana</span>
-          <strong id="valorSemana">R$0,00</strong>
-        </div>
-        <div class="quebra-item">
-          <span>Por mês</span>
-          <strong id="valorMes">R$0,00</strong>
-        </div>
+      <div class="periodo-toggle">
+        <button type="button" id="btnPeriodoDia" class="periodo-btn ativo" data-periodo="dia">Dia</button>
+        <button type="button" id="btnPeriodoSemana" class="periodo-btn" data-periodo="semana">Semana</button>
+        <button type="button" id="btnPeriodoMes" class="periodo-btn" data-periodo="mes">Mês</button>
       </div>
 
       <button id="btnAdicionarValor" type="button">Movimentar valor</button>
@@ -162,7 +157,7 @@
     </div>
   </section>
 
-  <section class="minhas-metas">
+  <section>
     <h2>🎯 Minhas metas</h2>
     <div id="listaMetas" class="lista-metas"></div>
   </section>
