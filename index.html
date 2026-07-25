@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>Planner Financeiro</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2563eb">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+
+<!-- Suporte à instalação no celular (Android e iOS) -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Planner">
+
+<!-- CSS -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/styleMobile.css">
+
+<!-- Fonte -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Gráficos -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1>💰 Planner Financeiro</h1>
+    <span>Organize suas metas financeiras</span>
+  </div>
+
+  <div class="acoes-topo">
+    <select id="selecionarMeta">
+      <option value="">Todas as metas</option>
+    </select>
+
+    <button id="btnTema" type="button" aria-label="Alternar tema">🌙</button>
+
+    <button id="btnNovaMeta" type="button">+ Nova Meta</button>
+  </div>
+</header>
+
+<main>
+
+ 
+
+  <section class="meta-selecionada">
+
+    <div class="card-destaque">
+      <h2 id="nomeMetaSelecionada">Nenhuma meta selecionada</h2>
+
+      <div class="porcentagem">
+        <div class="circulo">
+          <strong id="percentualSelecionado">0%</strong>
+        </div>
+      </div>
+
+      <div class="info">
+        <span>Meta</span>
+        <strong id="valorMetaSelecionada">R$0,00</strong>
+      </div>
+
+      <div class="info">
+        <span>Guardado</span>
+        <strong id="valorAtualSelecionada">R$0,00</strong>
+      </div>
+
+      <div class="info">
+        <span>Falta</span>
+        <strong id="faltaSelecionada">R$0,00</strong>
+      </div>
+
+      <div class="info">
+        <span>📆 Hoje</span>
+        <strong id="dataAtual">--</strong>
+      </div>
+
+      <div class="info">
+        <span>🏁 Vencimento</span>
+        <strong id="dataVencimento">--</strong>
+      </div>
+
+      <div class="info">
+        <span>⏳ Dias restantes</span>
+        <strong id="diasSelecionada">0</strong>
+      </div>
+
+      <div class="barra">
+        <div id="progressoSelecionada" class="progresso"></div>
+      </div>
+
+      <div id="analiseMeta" class="analise"></div>
+
+      <div class="historico">
+        <h3>Histórico de aportes</h3>
+        <div id="listaHistorico">
+          <p>Selecione uma meta para ver os aportes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-dia">
+      <h2>💰 Guardar por dia</h2>
+      <strong id="valorDia">R$0,00</strong>
+      <button id="btnAdicionarValor" type="button">Movimentar valor</button>
+    </div>
+
+  </section>
+
+   <section class="dashboard">
+    <div class="card-dashboard">
+      <span>Total das metas</span>
+      <h2 id="totalMetas">R$ 0,00</h2>
+    </div>
+
+    <div class="card-dashboard">
+      <span>Total guardado</span>
+      <h2 id="totalGuardado">R$ 0,00</h2>
+    </div>
+
+    <div class="card-dashboard">
+      <span>Falta guardar</span>
+      <h2 id="totalFalta">R$ 0,00</h2>
+    </div>
+
+    <div class="card-dashboard">
+      <span>Quantidade</span>
+      <h2 id="totalQuantidade">0</h2>
+    </div>
+  </section>
+
+  <section class="graficos">
+    <div class="grafico-card">
+      <h3>Distribuição</h3>
+      <canvas id="graficoPizza"></canvas>
+    </div>
+
+    <div class="grafico-card">
+      <h3>Evolução</h3>
+      <canvas id="graficoLinha"></canvas>
+    </div>
+  </section>
+
+  <section>
+    <h2>🎯 Minhas metas</h2>
+    <div id="listaMetas" class="lista-metas"></div>
+  </section>
+
+</main>
+
+<!-- MODAL META -->
+<div id="modal" class="modal oculto">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="tituloModal">Nova Meta</h2>
+      <button id="btnFechar" type="button" aria-label="Fechar">✕</button>
+    </div>
+
+    <div class="grupo">
+      <label for="nomeMeta">Nome da meta</label>
+      <input id="nomeMeta" placeholder="Ex: Viagem, Moto, Reserva...">
+    </div>
+
+    <div class="grupo">
+      <label for="valorMeta">Valor da meta</label>
+      <input id="valorMeta" type="number" min="0" step="0.01" placeholder="0,00">
+    </div>
+
+    <div class="grupo">
+      <label for="valorAtual">Valor inicial já guardado</label>
+      <input id="valorAtual" type="number" min="0" step="0.01" placeholder="0,00">
+    </div>
+
+    <div class="grupo">
+      <label for="dataFinal">Data de vencimento</label>
+      <input id="dataFinal" type="date">
+    </div>
+
+    <button id="btnSalvar" type="button">Salvar Meta</button>
+  </div>
+</div>
+
+<!-- MODAL ADICIONAR VALOR -->
+<div id="modalValor" class="modal oculto">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Movimentar valor</h2>
+      <button id="btnFecharValor" type="button" aria-label="Fechar">✕</button>
+    </div>
+
+    <div class="grupo">
+      <label>Tipo de movimentação</label>
+      <div class="tipo-toggle">
+        <button type="button" id="btnTipoAporte" class="tipo-btn ativo" data-tipo="aporte">➕ Aporte</button>
+        <button type="button" id="btnTipoRetirada" class="tipo-btn" data-tipo="retirada">➖ Retirada</button>
+      </div>
+    </div>
+
+    <div class="grupo">
+      <label for="valorAdicionar">Valor</label>
+      <input id="valorAdicionar" type="number" min="0" step="0.01" placeholder="0,00">
+    </div>
+
+    <button id="btnSalvarValor" type="button">Confirmar aporte</button>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
