@@ -11,7 +11,7 @@
 [![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chart.js&logoColor=white)](#)
 [![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Online-222222?style=for-the-badge&logo=github&logoColor=white)](https://bswbruno.github.io/PlannerFinanceiro/)
 
-
+### 🔗 [Acessar o app ao vivo](https://bswbruno.github.io/PlannerFinanceiro/)
 
 [Funcionalidades](#-funcionalidades) · [Tecnologias](#-tecnologias) · [Como rodar](#-como-rodar-localmente) · [Deploy](#-deploy-no-github-pages)
 
@@ -28,13 +28,15 @@
   Dica: um GIF curto mostrando o fluxo (criar meta → aporte → dashboard) vende muito bem no portfólio.
 -->
 
-<img src="./docs/screenshots/dashboard.png" alt="Dashboard do Planner Financeiro exibindo metas, gráficos e resumo financeiro" width="800">
+<img src="./docs/screenshots/PáginaInicial.png" alt="Dashboard do Planner Financeiro exibindo metas, gráficos e resumo financeiro" width="800">
+
+<img src="./docs/screenshots/dashboard-tela.png" alt="Dashboard do Planner Financeiro exibindo metas, gráficos e resumo financeiro" width="800">
 
 <br><br>
 
-<img src="./docs/screenshots/mobile.png" alt="Planner Financeiro instalado e em uso em um smartphone" width="260">
+<img src="./docs/screenshots/Mobile.gif" alt="Planner Financeiro instalado e em uso em um smartphone" width="260">
 &nbsp;&nbsp;
-<img src="./docs/screenshots/modal.png" alt="Modal de criação de meta financeira" width="260">
+
 
 </div>
 
@@ -44,7 +46,7 @@
 
 O **Planner Financeiro** nasceu de um problema bem prático: como saber, todos os dias, **quanto eu preciso guardar** para bater cada uma das minhas metas financeiras antes do prazo?
 
-O app centraliza várias metas (viagem, reserva de emergência, um curso, uma compra) e calcula automaticamente, para cada uma, o valor diário necessário até o vencimento além de dar uma visão consolidada em dashboard, gráficos de distribuição/evolução e histórico de aportes e retiradas.
+O app centraliza várias metas (viagem, reserva de emergência, um curso, uma compra) e calcula automaticamente, para cada uma, o valor diário necessário até o vencimento — além de dar uma visão consolidada em dashboard, gráficos de distribuição/evolução e histórico de aportes e retiradas.
 
 Foi construído **sem frameworks**, com HTML, CSS e JavaScript puro, como exercício de fundamentar bem os conceitos de DOM, estado em memória, persistência local e Service Workers — e para entregar uma experiência de app nativo (instalável, responsivo, offline-first) usando só tecnologias web nativas.
 
@@ -96,8 +98,8 @@ Por ser um projeto 100% estático, não precisa de build nem de instalação de 
 
 ```bash
 # clone o repositório
-git clone https://github.com/SEU_USUARIO/NOME_DO_REPOSITORIO.git
-cd NOME_DO_REPOSITORIO
+git clone https://github.com/bswbruno/PlannerFinanceiro.git
+cd PlannerFinanceiro
 
 # sirva os arquivos com qualquer servidor estático
 npx serve .
@@ -124,7 +126,7 @@ O projeto é 100% estático, então o GitHub Pages é a forma mais simples (e gr
 3. Em **Build and deployment**, selecione **Deploy from a branch**
 4. Escolha a branch `main` e a pasta `/ (root)` → **Save**
 5. Em alguns minutos o GitHub ativa o endereço:
-   `https://SEU_USUARIO.github.io/NOME_DO_REPOSITORIO/`
+   `https://bswbruno.github.io/PlannerFinanceiro/`
 6. Atualize esse link no topo deste README e no badge **GitHub Pages**
 
 > ✅ Como todos os caminhos do projeto (`css/`, `js/`, `assets/`, `manifest.json`) são relativos, ele funciona normalmente publicado dentro de um subcaminho como `usuario.github.io/repositorio/` — não precisa ajustar nada no código.
@@ -153,7 +155,7 @@ O jeito mais confiável é **linkar** para a URL do GitHub Pages (um botão "Ver
 
 ## 👤 Autor
 
-Feito por **[Bruno Santos]**
+Feito por **[Seu Nome]**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/seu-usuario)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario)

@@ -124,6 +124,7 @@ main{
 
 .dashboard{
 
+    margin-top:30px;
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:20px;
@@ -136,6 +137,7 @@ main{
     padding:25px;
     border-radius:20px;
     border:1px solid var(--border);
+    min-width:0;
 
 }
 
@@ -170,6 +172,7 @@ main{
     padding:30px;
     border-radius:20px;
     border:1px solid var(--border);
+    min-width:0;
 
 }
 
@@ -257,6 +260,43 @@ main{
 
 }
 
+/* QUEBRA POR SEMANA / MES (visivel quando faltam mais de 30 dias) */
+
+.quebra-periodo{
+
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    padding-top:10px;
+    border-top:1px solid var(--border);
+
+}
+
+.quebra-item{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+
+}
+
+.quebra-item span{
+
+    font-size:12px;
+    color:var(--secondary);
+    text-transform:uppercase;
+    letter-spacing:.03em;
+
+}
+
+.quebra-item strong{
+
+    font-size:18px;
+    color:var(--text);
+
+}
+
 /* HISTORICO */
 
 .historico{
@@ -277,7 +317,6 @@ main{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:20px;
-    max-width: 90;
 
 }
 
@@ -287,6 +326,15 @@ main{
     padding:25px;
     border-radius:20px;
     border:1px solid var(--border);
+    min-width:0;
+
+}
+
+.grafico-card canvas{
+
+    max-width:100%;
+    height:auto !important;
+    display:block;
 
 }
 
@@ -301,12 +349,19 @@ main{
 
 }
 
+.minhas-metas{
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 3%;
+}
+
 .meta-card{
 
     background:var(--card);
     padding:25px;
     border-radius:20px;
     border:1px solid var(--border);
+    min-width:0;
 
 }
 
@@ -558,14 +613,38 @@ body.dark .historico-valor.retirada{
 
     display:flex;
     justify-content:space-between;
+    align-items:center;
+    gap:16px;
     margin-bottom:20px;
+
+}
+
+.modal-header h2{
+
+    margin:0;
+    min-width:0;
 
 }
 
 .modal-header button{
 
+    flex-shrink:0;
+    width:36px;
+    height:36px;
+    padding:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     background:transparent;
     color:var(--text);
+    font-size:18px;
+    border-radius:50%;
+
+}
+
+.modal-header button:hover{
+
+    background:var(--bg);
 
 }
 
@@ -610,6 +689,12 @@ grid-template-columns:repeat(2,1fr);
 
 grid-template-columns:1fr;
 
+}
+
+.minhas-metas{
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 3%;
 }
 
 .card-dia{

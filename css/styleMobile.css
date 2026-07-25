@@ -98,6 +98,8 @@ header{
 
     gap:15px;
 
+    padding-top: 0;
+
 }
 
 .card-dashboard{
@@ -253,6 +255,12 @@ canvas{
 
 }
 
+.minhas-metas h2 {
+    padding-top: 4%;
+    text-align: center;
+    text-transform: uppercase;
+}
+
 .meta-card{
 
     padding:20px;
@@ -307,7 +315,7 @@ canvas{
 
 }
 
-.modal-content button{
+.modal-content > button{
 
     width:100%;
 

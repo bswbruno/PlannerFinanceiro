@@ -127,6 +127,21 @@ document.getElementById(
 "analiseMeta"
 );
 
+const quebraPeriodo =
+document.getElementById(
+"quebraPeriodo"
+);
+
+const valorSemana =
+document.getElementById(
+"valorSemana"
+);
+
+const valorMes =
+document.getElementById(
+"valorMes"
+);
+
 // ===============================
 // INICIALIZAÇÃO
 // ===============================
@@ -510,6 +525,25 @@ function mostrarMetaSelecionada(){
     +
     " / dia";
 
+    if(dias>30){
+
+        valorSemana.textContent =
+        moeda(dia*7);
+
+        valorMes.textContent =
+        moeda(dia*30);
+
+        quebraPeriodo.style.display =
+        "flex";
+
+    }
+    else{
+
+        quebraPeriodo.style.display =
+        "none";
+
+    }
+
     percentualSelecionado.textContent =
     progresso.toFixed(1)
     +
@@ -596,6 +630,9 @@ function limparMetaSelecionada(){
 
     valorDia.textContent =
     "R$ 0,00";
+
+    quebraPeriodo.style.display =
+    "none";
 
     percentualSelecionado.textContent =
     "0%";

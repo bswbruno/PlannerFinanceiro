@@ -1,4 +1,4 @@
-const CACHE_NAME = "planner-financeiro-v2";
+const CACHE_NAME = "planner-financeiro-v3";
 
 // Caminhos relativos à raiz do projeto (onde este arquivo vive)
 const arquivos = [
@@ -40,28 +40,36 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
+// ESTRATÉGIA: network-first (tenta a rede primeiro, cache é só um plano B offline).
+// Assim, toda vez que você atualiza o CSS/JS/HTML e publica, o app já mostra a
+// versão nova na próxima abertura com internet — sem precisar limpar cache
+// manualmente. Se estiver offline, cai para a última versão salva.
 self.addEventListener("fetch", (event) => {
   // apenas GET pode ser cacheado com segurança
   if (event.request.method !== "GET") return;
 
-  event.respondWith(
-    caches.match(event.request).then((resposta) => {
-      if (resposta) return resposta;
+  // recursos de fora do próprio site (ex: CDN do Chart.js, Google Fonts)
+  // continuam podendo vir do cache normalmente, sem forçar rede
+  const mesmaOrigem = event.request.url.startsWith(self.location.origin);
 
-      return fetch(event.request)
-        .then((respostaRede) => {
-          // guarda uma cópia no cache para uso offline futuro (apenas arquivos do próprio site)
-          if (
-            respostaRede &&
-            respostaRede.ok &&
-            event.request.url.startsWith(self.location.origin)
-          ) {
-            const copia = respostaRede.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copia));
-          }
-          return respostaRede;
-        })
-        .catch(() => caches.match("index.html"));
-    })
+  if (!mesmaOrigem) {
+    event.respondWith(
+      caches.match(event.request).then((resposta) => resposta || fetch(event.request))
+    );
+    return;
+  }
+
+  event.respondWith(
+    fetch(event.request)
+      .then((respostaRede) => {
+        if (respostaRede && respostaRede.ok) {
+          const copia = respostaRede.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copia));
+        }
+        return respostaRede;
+      })
+      .catch(() =>
+        caches.match(event.request).then((resposta) => resposta || caches.match("index.html"))
+      )
   );
 });
