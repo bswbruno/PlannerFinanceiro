@@ -126,7 +126,7 @@ Depois é só abrir `http://localhost:8080` no navegador.
 
 ## 👤 Autor
 
-Feito por **[Seu Nome]**
+Feito por **Bruno Santos**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/wanderley-bruno/)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bswbruno)
