@@ -2001,12 +2001,6 @@ function verificarMudancaDeDia(){
 
 }
 
-// checa a cada minuto (troca de dia é detectada em até 1 min de atraso)
-setInterval(
-verificarMudancaDeDia,
-60000
-);
-
 // checa também assim que a aba volta a ficar visível
 // (ex: celular que ficou em segundo plano ou tela bloqueada durante a noite)
 document.addEventListener(
@@ -2017,9 +2011,47 @@ document.addEventListener(
 
         verificarMudancaDeDia();
 
+        verificarNovaVersaoDoApp();
+
     }
 
 }
+);
+
+function verificarNovaVersaoDoApp(){
+
+    if(!("serviceWorker" in navigator)){
+
+        return;
+
+    }
+
+    navigator.serviceWorker
+    .getRegistration()
+    .then((registro)=>{
+
+        if(registro){
+
+            registro.update();
+
+        }
+
+    })
+    .catch(()=>{});
+
+}
+
+// além de checar a virada do dia, aproveita o mesmo intervalo de 1 minuto
+// pra perguntar ao navegador se existe uma versão nova do app publicada
+setInterval(
+()=>{
+
+    verificarMudancaDeDia();
+
+    verificarNovaVersaoDoApp();
+
+},
+60000
 );
 
 
@@ -2044,34 +2076,73 @@ document.getElementById(
 "btnAtualizarDepois"
 );
 
-function mostrarBannerAtualizacao(workerEmEspera){
+// guarda o service worker "novo" (esperando ativar), pra poder mandar
+// a mensagem de skip-waiting quando o usuário clicar em "Atualizar agora"
+let workerAguardandoAtivacao = null;
+
+// só recarrega a página sozinha se o PRÓPRIO usuário pediu a atualização —
+// evita reload inesperado na primeira visita (quando o SW assume o
+// controle da página pela primeira vez, o que também dispara
+// "controllerchange", mas nesse caso não é uma atualização de verdade)
+let atualizacaoPedidaPeloUsuario = false;
+
+function abrirBannerAtualizacao(worker){
+
+    workerAguardandoAtivacao = worker;
 
     bannerAtualizacao.classList.remove(
         "oculto"
     );
 
-    btnAtualizarAgora.onclick = ()=>{
+}
 
-        workerEmEspera.postMessage(
-            "SKIP_WAITING"
-        );
+function fecharBannerAtualizacao(){
 
-        btnAtualizarAgora.disabled = true;
-
-        btnAtualizarAgora.textContent =
-        "Atualizando...";
-
-    };
-
-    btnAtualizarDepois.onclick = ()=>{
-
-        bannerAtualizacao.classList.add(
-            "oculto"
-        );
-
-    };
+    bannerAtualizacao.classList.add(
+        "oculto"
+    );
 
 }
+
+// os dois botões são vinculados UMA ÚNICA VEZ, aqui, e não dependem de
+// nenhum estado do service worker pra responder ao clique — assim eles
+// nunca ficam "travados" mesmo se algo no fluxo de atualização falhar
+btnAtualizarDepois.addEventListener(
+"click",
+()=>{
+
+    fecharBannerAtualizacao();
+
+}
+);
+
+btnAtualizarAgora.addEventListener(
+"click",
+()=>{
+
+    if(!workerAguardandoAtivacao){
+
+        // não deveria acontecer, mas por garantia: se não há worker
+        // pra ativar, só fecha o banner em vez de deixar o botão "preso"
+        fecharBannerAtualizacao();
+
+        return;
+
+    }
+
+    atualizacaoPedidaPeloUsuario = true;
+
+    btnAtualizarAgora.disabled = true;
+
+    btnAtualizarAgora.textContent =
+    "Atualizando...";
+
+    workerAguardandoAtivacao.postMessage(
+        "SKIP_WAITING"
+    );
+
+}
+);
 
 if(
 "serviceWorker" in navigator
@@ -2082,18 +2153,19 @@ if(
     ()=>{
 
         navigator.serviceWorker.register(
-        "service-worker.js"
+        "service-worker.js",
+        { updateViaCache:"none" }
         )
         .then((registro)=>{
 
             console.log(
-            "Aplicativo funcionando offline"
+            "Service worker registrado"
             );
 
-            // ja existe uma atualização baixada e esperando (ex: outra aba)
-            if(registro.waiting){
+            // já existe uma atualização baixada e esperando (ex: outra aba)
+            if(registro.waiting && navigator.serviceWorker.controller){
 
-                mostrarBannerAtualizacao(
+                abrirBannerAtualizacao(
                     registro.waiting
                 );
 
@@ -2124,7 +2196,7 @@ if(
                     navigator.serviceWorker.controller
                     ){
 
-                        mostrarBannerAtualizacao(
+                        abrirBannerAtualizacao(
                             novoWorker
                         );
 
@@ -2140,27 +2212,25 @@ if(
         .catch((erro)=>{
 
             console.warn(
-            "Falha ao registrar service worker",
+            "Falha ao registrar service worker:",
             erro
             );
 
         });
 
-        // quando o novo worker assume, recarrega a página uma única vez
-        // pra garantir que o HTML/JS/CSS mais novos sejam usados
-        let jaRecarregou = false;
-
+        // quando o novo worker assume o controle, recarrega a página —
+        // mas só se foi o usuário quem pediu a atualização
         navigator.serviceWorker.addEventListener(
         "controllerchange",
         ()=>{
 
-            if(jaRecarregou){
+            if(!atualizacaoPedidaPeloUsuario){
 
                 return;
 
             }
 
-            jaRecarregou = true;
+            atualizacaoPedidaPeloUsuario = false;
 
             window.location.reload();
 

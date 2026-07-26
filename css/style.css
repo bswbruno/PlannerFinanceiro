@@ -712,44 +712,46 @@ body.dark .historico-valor.retirada{
 
 }
 
-/* BANNER DE ATUALIZAÇÃO */
+/* BANNER DE ATUALIZAÇÃO (modal centralizado) */
 
-.banner-atualizacao{
+.overlay-atualizacao{
 
-    position:fixed;
-    left:20px;
-    right:20px;
-    bottom:20px;
-    z-index:200;
-    max-width:520px;
-    margin:0 auto;
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:16px;
-    box-shadow:0 10px 30px rgba(0,0,0,.25);
-    padding:20px;
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+    z-index:300;
+
+}
+
+.banner-atualizacao-content{
+
+    width:380px;
+    text-align:center;
     display:flex;
+    flex-direction:column;
     align-items:center;
-    gap:16px;
-    flex-wrap:wrap;
-    animation:subirBanner .3s ease;
 
 }
 
-@keyframes subirBanner{
+.banner-atualizacao-icone{
 
-    from{ transform:translateY(20px); opacity:0; }
-
-    to{ transform:translateY(0); opacity:1; }
+    font-size:40px;
+    margin-bottom:12px;
 
 }
 
-.banner-atualizacao span{
+.banner-atualizacao-content h2{
 
-    flex:1;
-    min-width:200px;
+    font-size:20px;
+    margin-bottom:10px;
+
+}
+
+.banner-atualizacao-content p{
+
+    color:var(--secondary);
     font-size:14px;
-    font-weight:500;
+    line-height:1.5;
+    margin-bottom:24px;
 
 }
 
@@ -757,13 +759,13 @@ body.dark .historico-valor.retirada{
 
     display:flex;
     gap:10px;
+    width:100%;
 
 }
 
 .banner-atualizacao-acoes button{
 
-    padding:10px 16px;
-    font-size:13px;
+    flex:1;
 
 }
 
