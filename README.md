@@ -28,7 +28,7 @@
   Dica: um GIF curto mostrando o fluxo (criar meta → aporte → dashboard) vende muito bem no portfólio.
 -->
 
-<img src="./docs/screenshots/dashboard.png" alt="Dashboard do Planner Financeiro exibindo metas, gráficos e resumo financeiro" width="800">
+<img src="./docs/screenshots/dashboard-tela.png" alt="Dashboard do Planner Financeiro exibindo metas, gráficos e resumo financeiro" width="800">
 
 <br><br>
 
