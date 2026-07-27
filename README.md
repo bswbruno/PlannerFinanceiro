@@ -2,7 +2,7 @@
 
 # 💰 Planner Financeiro
 
-**Um PWA (Progressive Web App) para organizar metas financeiras, calcular quanto guardar por dia e acompanhar sua evolução — instalável no celular, funciona offline e roda 100% em JavaScript puro.**
+**Um PWA (Progressive Web App) para organizar metas financeiras, calcular quanto guardar por dia e acompanhar sua evolução instalável no celular, funciona offline e roda 100% em JavaScript puro.**
 
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](#)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](#)
@@ -23,10 +23,6 @@
 
 <div align="center">
 
-<!--
-  Coloque os prints do projeto em docs/screenshots/ e ajuste os nomes abaixo.
-  Dica: um GIF curto mostrando o fluxo (criar meta → aporte → dashboard) vende muito bem no portfólio.
--->
 
 <img src="./docs/screenshots/dashboard-tela.png" alt="Dashboard do Planner Financeiro exibindo metas, gráficos e resumo financeiro" width="800">
 
@@ -44,9 +40,9 @@
 
 O **Planner Financeiro** nasceu de um problema bem prático: como saber, todos os dias, **quanto eu preciso guardar** para bater cada uma das minhas metas financeiras antes do prazo?
 
-O app centraliza várias metas (viagem, reserva de emergência, um curso, uma compra) e calcula automaticamente, para cada uma, o valor diário necessário até o vencimento — além de dar uma visão consolidada em dashboard, gráficos de distribuição/evolução e histórico de aportes e retiradas.
+O app centraliza várias metas (viagem, reserva de emergência, um curso, uma compra) e calcula automaticamente, para cada uma, o valor diário necessário até o vencimento além de dar uma visão consolidada em dashboard, gráficos de distribuição/evolução e histórico de aportes e retiradas.
 
-Foi construído **sem frameworks**, com HTML, CSS e JavaScript puro, como exercício de fundamentar bem os conceitos de DOM, estado em memória, persistência local e Service Workers — e para entregar uma experiência de app nativo (instalável, responsivo, offline-first) usando só tecnologias web nativas.
+Foi construído **sem frameworks**, com HTML, CSS e JavaScript puro, como exercício de fundamentar bem os conceitos de DOM, estado em memória, persistência local e Service Workers e para entregar uma experiência de app nativo (instalável, responsivo, offline-first) usando só tecnologias web nativas.
 
 ## ✨ Funcionalidades
 
@@ -127,15 +123,6 @@ O projeto é 100% estático, então o GitHub Pages é a forma mais simples (e gr
    `https://bswbruno.github.io/PlannerFinanceiro/`
 6. Atualize esse link no topo deste README e no badge **GitHub Pages**
 
-> ✅ Como todos os caminhos do projeto (`css/`, `js/`, `assets/`, `manifest.json`) são relativos, ele funciona normalmente publicado dentro de um subcaminho como `usuario.github.io/repositorio/` — não precisa ajustar nada no código.
-
-### Colocando no seu site de portfólio
-
-O jeito mais confiável é **linkar** para a URL do GitHub Pages (um botão "Ver projeto" / "Live demo" apontando pra ela), em vez de colocar o app dentro de um `<iframe>`. PWAs com Service Worker às vezes se comportam de forma inconsistente dentro de iframe (o registro do Service Worker pode ser bloqueado pelo navegador dependendo do contexto). Para o portfólio, o combo que funciona bem é:
-
-- Print/GIF do app na seção do projeto (use os arquivos de `docs/screenshots/`)
-- Botão/link "🔗 Ver ao vivo" apontando para o GitHub Pages
-- Botão/link "💻 Código-fonte" apontando para o repositório
 
 ## 🧠 Desafios e aprendizados
 
@@ -153,10 +140,10 @@ O jeito mais confiável é **linkar** para a URL do GitHub Pages (um botão "Ver
 
 ## 👤 Autor
 
-Feito por **[Seu Nome]**
+Feito por **Bruno Santos**
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/seu-usuario)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/wanderley-bruno/)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bswbruno/PlannerFinanceiro)
 
 ---
 
