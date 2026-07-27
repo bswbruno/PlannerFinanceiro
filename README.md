@@ -34,7 +34,7 @@
 
 <img src="./docs/screenshots/Mobile.gif" alt="Planner Financeiro instalado e em uso em um smartphone" width="260">
 &nbsp;&nbsp;
-<img src="./docs/screenshots/tela-criar-meta.png" alt="Modal de criação de meta financeira" width="260">
+<img src="./docs/screenshots/tela-criar-meta.png" alt="Modal de criação de meta financeira" width="560">
 
 </div>
 
